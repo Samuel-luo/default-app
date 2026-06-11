@@ -62,11 +62,36 @@ DefaultApp/
 A build script is provided in the `Scripts` directory to compile the application and package it into a `.dmg` file.
 
 #### Unsigned Local Build
-To build an unsigned DMG for local testing:
+To build an unsigned DMG for local testing or sharing:
 ```bash
 ./Scripts/build-dmg.sh
 ```
 The output DMG will be generated at `build/DefaultApp.dmg`.
+
+### 📦 How to Install and Run Unsigned DMG (Gatekeeper Bypass)
+Since the local build is unsigned and unnotarized, macOS Gatekeeper will block it by default with warnings like "App is damaged" or "Developer cannot be verified".
+
+Please follow these steps to install and run the application:
+
+1. **Install**:
+   - Double-click `DefaultApp.dmg`.
+   - Drag `DefaultApp.app` into the `/Applications` folder.
+
+2. **Bypass Security Check (Fastest - One-Line Terminal Command)**:
+   - Open **Terminal.app**.
+   - Run the following command (enter your Mac password if prompted):
+     ```bash
+     xattr -cr /Applications/DefaultApp.app
+     ```
+   - Now you can double-click and open `DefaultApp` normally from your Applications or Launchpad!
+
+3. **Alternative Bypass (Manual via System Settings)**:
+   - Double-click the app in `/Applications`. When the warning popup appears, click **Cancel**.
+   - Open **System Settings** -> **Privacy & Security**.
+   - Scroll down to the **Security** section.
+   - You will see a message: *"DefaultApp was blocked from use because it is not from an identified developer."*
+   - Click **Open Anyway** and enter your Mac credentials.
+   - Click **Open** on the final confirmation dialog.
 
 #### Signed and Notarized Release Build
 To build a signed and notarized DMG for distribution, run the script with the `--release` flag and provide your Apple Developer credentials:
